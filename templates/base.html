@@ -1,0 +1,43 @@
+{% load staticfiles %}
+<html>
+
+<head>
+    <title>PyLight - Home Automation System</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href=//fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed" rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static 'css/interface.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sideNav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slider_button.css' %}">
+</head>
+<div id="main">
+    <body>
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <a href="#">Schalter</a>
+          <a href="#">Service</a>
+        </div>
+        <div class="page-header">
+            <h1>
+                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+                <a href="/">PyLight - Home Automation System</a>
+            </h1>
+        </div>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</div>
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+}
+</script>
+</html>

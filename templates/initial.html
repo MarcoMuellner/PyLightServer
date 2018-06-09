@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<h2><a>Verfügbare Systeme</a></h2>
+<ul>
+{% if connectedSystem_list %}
+    {% for connectedSystem in connectedSystem_list|dictsortreversed:"id" %}
+        <li>
+        {% block systemForm %}
+        {% endblock %}
+        </li>
+        <ul>
+        {% for usedio in connectedSystem.usedio_set.all|dictsortreversed:"id" %}
+            <li>
+            {% block ioForm %}
+            {% endblock %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Keine verbundenen Geräte</p>
+{% endif %}
+{% endblock %}
