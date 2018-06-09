@@ -1,0 +1,18 @@
+{% extends 'manageTools/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<h2><a>Verfügbare Systeme</a></h2>
+{% if connectedSystem_list %}
+    {% for connectedSystem in connectedSystem_list|dictsortreversed:"id" %}
+        {% block systemForm %}
+        {% endblock %}
+        {% for usedio in connectedSystem.usedio_set.all|dictsortreversed:"id" %}
+            {% block ioForm %}
+            {% endblock %}
+        {% endfor %}
+    {% endfor %}
+{% else %}
+<p>Keine verbundenen Geräte</p>
+{% endif %}
+{% endblock %}

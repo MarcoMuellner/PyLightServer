@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<html>
+
+<head>
+    <title>Muse.um Content Management</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href=//fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed" rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static 'css/interface.css' %}">
+</head>
+<body>
+<div class="page-header">
+    <h1><a href="/">PyLight - Home Automation System</a></h1>
+</div>
+<header class="header">
+
+</header>
+        {% block content %}
+        {% endblock %}
+</body>
+</html>

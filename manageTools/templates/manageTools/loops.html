@@ -1,0 +1,31 @@
+{% extends 'manageTools/initial.html' %}
+{% load staticfiles %}
+
+{% block systemForm %}
+    <form action="{% url 'saveSystem' connectedSystem.id %}" method="post">
+        {%  csrf_token %}
+            {{ connectedSystem.id }}
+            <label for="{{ connectedSystem.id }}">Systemname:</label>
+            <input type="text" name="system_name" id={{ connectedSystem.id }} value="{{ connectedSystem.name }}">
+            {{ connectedSystem.lastIP }} {{ connectedSystem.lastMacAddress }} {{ connectedSystem.serialNumber }}
+        <input type="submit" value="Speichern" /><br/>
+    </form>
+{% endblock %}
+
+{% block ioForm %}
+    <form action="{% url 'saveIO' usedio.id %}" method="post">
+        {%  csrf_token %}
+        {{ usedio.id }}
+
+        {% block ioName %}
+        {% endblock %}
+
+        {% block pinLoop %}
+        {% endblock %}
+
+        {% block typeLoop %}
+        {% endblock %}
+
+        <input type="submit" value="Speichern" /><br/>
+    </form>
+{% endblock %}

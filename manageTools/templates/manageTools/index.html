@@ -1,0 +1,35 @@
+{% extends 'manageTools/loops.html' %}
+{% load staticfiles %}
+
+{% block ioName %}
+    <label for="io_name:{{ usedio.id }}">IO Name</label>
+    <input type="text" name ="io_name" id ="io_name:{{ usedio.id }}" value="{{ usedio.name }}">
+{% endblock %}
+
+{% block pinLoop %}
+    <label for="io_selection{{ usedio.id }}">IO Auswahl:</label>
+    <select name="io_selection" id="io_selection{{ usedio.id }}">
+        {% for io in usedio.pin.getAllObjects %}
+            {% if io.ioNr != usedio.pin.ioNr %}
+                <option value="{{ io.ioNr }}">{{ io.ioNr }}</option>
+            {% endif %}
+            {% if io.ioNr == usedio.pin.ioNr %}
+                <option selected="selected" value="{{ io.ioNr }}">{{ io.ioNr }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+{% endblock %}
+
+{% block typeLoop %}
+    <label for="io_type_selection{{ usedio.id }}">IO Typ:</label>
+    <select name="io_type_selection" id="io_type_selection{{ usedio.id }}">
+        {% for ioType in usedio.type.getAllObjects %}
+            {% if ioType.id != usedio.type_id %}
+                <option value="{{ ioType.id  }}">{{ ioType.id }}</option>
+            {% endif %}
+            {% if ioType.id == usedio.type_id %}
+                <option selected="selected" value="{{ ioType.id  }}">{{ ioType.id }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+{% endblock %}
