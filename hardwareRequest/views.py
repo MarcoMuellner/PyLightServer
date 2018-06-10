@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from manageTools.models import ConnectedSystem,UsedIO,IO,IOType
-from Support.Commandos import *
+from PyLightSupport.Commandos import *
 from PyLightServer.tcpserver import sendDataToTCPServer
 import sys
 

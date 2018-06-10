@@ -4,7 +4,7 @@ from django.views import generic
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from Support.Commandos import *
+from PyLightSupport.Commandos import *
 from PyLightServer.tcpserver import sendDataToTCPServer
 
 class ConnectedSystemsView(generic.ListView):

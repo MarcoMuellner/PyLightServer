@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.db import IntegrityError
-from Support.Commandos import *
+from PyLightSupport.Commandos import *
 from PyLightServer.tcpserver import sendDataToTCPServer
 
 
