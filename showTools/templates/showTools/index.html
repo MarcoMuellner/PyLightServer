@@ -4,17 +4,7 @@
 {% block systemForm %}
 
     <div class="Systems_overview">
-        <label for="system_name:{{ connectedSystem_id }}">System Name:</label>
-        <strong id="system_name:{{ connectedSystem_id }}">{{ connectedSystem.name }} </strong>
-
-        <label for="system_ip:{{ connectedSystem_id }}">IP:</label>
-        <strong id="system_ip:{{ connectedSystem_id }}">{{ connectedSystem.lastIP }}</strong>
-
-        <label for="system_lastMacAddress:{{ connectedSystem_id }}">Mac Adresse:</label>
-        <strong id="system_lastMacAddress:{{ connectedSystem_id }}">{{ connectedSystem.lastMacAddress }}</strong>
-
-        <label for="system_serialNumber:{{ connectedSystem_id }}">Seriennummer:</label>
-        <strong id="system_serialNumber:{{ connectedSystem_id }}">{{ connectedSystem.serialNumber }}</strong>
+        <h3><strong id="system_name:{{ connectedSystem_id }}">{{ connectedSystem.name }} </strong></h3>
     </div>
 {% endblock %}
 
@@ -25,12 +15,14 @@
             <div class="used_io_switches">
                 <label for="IO_Name:{{ usedio.id }}">System Name:</label>
                 <strong id="IO_Name:{{ usedio.id }}">{{ usedio.name }} </strong>
-
-                <label class="switch">
-                  <input type="checkbox" name="io_switch" id="io_active:{{ usedio.id }}" onchange="this.form.submit()" {% if usedio.active is True %} checked {% endif %}>
-                  <span class="slider round"></span>
+            <div class="onoffswitch">
+                <input type="checkbox" name="io_switch" id="io_active:{{ usedio.id }}" class="onoffswitch-checkbox"
+                         onchange="this.form.submit()" {% if usedio.active is True %} checked {% endif %}>
+                <label class="onoffswitch-label" for="io_active:{{ usedio.id }}">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
                 </label>
-
+            </div>
             </div>
         </form>
     {% endif %}

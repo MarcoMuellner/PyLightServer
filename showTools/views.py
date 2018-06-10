@@ -26,5 +26,5 @@ def saveState(request,usedio_id):
 
 
     usedIo.save()
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('home'))
 

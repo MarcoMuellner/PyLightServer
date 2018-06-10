@@ -4,10 +4,18 @@
 {% block systemForm %}
     <form action="{% url 'saveSystem' connectedSystem.id %}" method="post">
         {%  csrf_token %}
-            <label for="{{ connectedSystem.id }}">Systemname:</label>
+            <strong><label for="{{ connectedSystem.id }}">Systemname:</label></strong>
             <input type="text" name="system_name" id={{ connectedSystem.id }} value="{{ connectedSystem.name }}">
-            {{ connectedSystem.lastIP }} {{ connectedSystem.lastMacAddress }} {{ connectedSystem.serialNumber }}
-        <input type="submit" value="Speichern" /><br/>
+        </br>
+        <strong>IP: </strong>{{ connectedSystem.lastIP }}
+        </br>
+        <strong>Mac Adresse: </strong>{{ connectedSystem.lastMacAddress }}
+        </br>
+        <strong>Seriennummer: </strong>{{ connectedSystem.serialNumber }}
+        </br>
+        </br>
+        </br>
+
     </form>
 {% endblock %}
 
@@ -23,7 +31,5 @@
 
         {% block typeLoop %}
         {% endblock %}
-
-        <input type="submit" value="Speichern" /><br/>
     </form>
 {% endblock %}
