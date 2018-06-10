@@ -29,8 +29,8 @@ class IOType(models.Model):
         return IOType.objects.all()
 
 class UsedIO(models.Model):
-    name = models.CharField(max_length=255,verbose_name='human readable name for the io',unique=True)
-    pin = models.OneToOneField(IO, on_delete=models.CASCADE, verbose_name='Pin nr')
+    name = models.CharField(max_length=255,verbose_name='human readable name for the io')
+    pin = models.ForeignKey(IO, on_delete=models.CASCADE, verbose_name='Pin nr')
     type = models.ForeignKey(IOType, on_delete=models.CASCADE, verbose_name='Type of IO')
     active = models.BooleanField(default=False,verbose_name="Active/Non Active IO")
     connectedSystem = models.ForeignKey(ConnectedSystem, on_delete=models.CASCADE)

@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'manageTools.apps.ManagetoolsConfig',
-    'showTools.apps.ShowtoolsConfig'
+    'showTools.apps.ShowtoolsConfig',
+    'hardwareRequest.apps.HardwarerequestConfig',
+
 ]
 
 MIDDLEWARE = [

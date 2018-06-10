@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.db import IntegrityError
+from Support.Commandos import *
+from PyLightServer.tcpserver import sendDataToTCPServer
 
 
 
@@ -41,4 +43,6 @@ def saveIO(request, usedio_id):
     except IntegrityError:
         usedIo.pin = oldPin
         usedIo.save()
+
+    sendDataToTCPServer(cmd_add_output[0]+f"||{usedIo.name}||{io.ioNr}")
     return HttpResponseRedirect(reverse('index'))
