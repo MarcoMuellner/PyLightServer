@@ -26,7 +26,8 @@ SECRET_KEY = '$au5@)de=s2c67_0iqluo1$afh$2dp(qtp35)(y-hw9fn&@u$!'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1',
-                 '192.168.0.114']
+                 '192.168.0.114',
+                 'pylight']
 
 
 # Application definition
