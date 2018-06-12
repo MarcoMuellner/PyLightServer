@@ -23,7 +23,8 @@ class Server(Protocol):
         if self.addr.host == '127.0.0.1':
             self.factory.sendData(data)
         else:
-            requests.post('http://127.0.0.1/hardwareRequest/',data={'cmd':data})
+            pass
+            #requests.post('http://127.0.0.1/hardwareRequest/',data={'cmd':data})
 
     def sendData(self,data):
         self.transport.write(data)

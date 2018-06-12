@@ -46,3 +46,7 @@ def saveIO(request, usedio_id):
 
     sendDataToTCPServer(cmd_add_output[0]+f"||{usedIo.name}||{io.ioNr}")
     return HttpResponseRedirect(reverse('index'))
+
+def config_layout(request):
+    template = 'manageTools/index.html'
+    return render(request,template)

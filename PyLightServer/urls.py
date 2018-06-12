@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
-from showTools import views
+import showTools
+import manageTools
 
 urlpatterns = [
     path('', include('pwa.urls')),
@@ -9,5 +10,6 @@ urlpatterns = [
     path('manageTools/', include('manageTools.urls')),
     path('hardwareRequest/', include('hardwareRequest.urls')),
     path('admin/', admin.site.urls),
-    path(r'base_layout',views.base_layout,name='base_layout'),
+    path(r'base_layout',showTools.views.base_layout,name='base_layout'),
+    path(r'config_layout',manageTools.views.config_layout,name='config_layout'),
 ]

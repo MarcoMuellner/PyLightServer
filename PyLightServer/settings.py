@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js', 'serviceworker.js')
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'PyLightServer/static/js', 'serviceworker.js')
 PWA_APP_NAME = 'PyLight'
 PWA_APP_DESCRIPTION = "PyLight - A hackable home automation system"
 PWA_APP_THEME_COLOR = '#0A0302'
@@ -152,7 +152,7 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'PyLightServer/static/',)]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (
