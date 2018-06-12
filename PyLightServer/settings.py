@@ -14,7 +14,30 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js', 'serviceworker.js')
+PWA_APP_NAME = 'PyLight'
+PWA_APP_DESCRIPTION = "PyLight - A hackable home automation system"
+PWA_APP_THEME_COLOR = '#0A0302'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_START_URL = '/showTools/'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/images/app_icon.png',
+        'sizes': '67x62'
+    },
+    {
+        'src': '/static/images/ico_2.png',
+        'sizes': '500x500'
+    },
+    {
+        'src': '/static/images/ico_3.png',
+        'sizes': '512x512'
+    },
+    {
+        'src': '/static/images/ico_4.png',
+        'sizes': '192x192'
+    }
+]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -27,7 +50,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1',
                  '192.168.0.114',
-                 'pylight']
+                 'pylight',
+                 'pylight.lan.com']
 
 
 # Application definition
@@ -42,6 +66,7 @@ INSTALLED_APPS = [
     'manageTools.apps.ManagetoolsConfig',
     'showTools.apps.ShowtoolsConfig',
     'hardwareRequest.apps.HardwarerequestConfig',
+    'pwa',
 
 ]
 

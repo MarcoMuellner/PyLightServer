@@ -14,6 +14,11 @@ class ConnectedSystemsView(generic.ListView):
     def get_queryset(self):
         return ConnectedSystem.objects.order_by('-name')
 
+
+def base_layout(request):
+	template='showTools/index.html'
+	return render(request,template)
+
 def saveState(request,usedio_id):
     usedIo = get_object_or_404(UsedIO,pk=usedio_id)
     if 'io_switch' in request.POST:
