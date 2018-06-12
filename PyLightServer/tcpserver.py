@@ -3,8 +3,11 @@ from twisted.internet.protocol import Factory
 import requests
 import sys
 import socket
+import logging
 
+from PyLightSupport.Globals import *
 
+logger = logging.getLogger(__name__)
 
 class Server(Protocol):
     def __init__(self,factory ,addr):
@@ -12,21 +15,23 @@ class Server(Protocol):
         self.addr = addr
 
     def connectionMade(self):
-        print(f"Client connected with ip {self.addr}")
+        logger.info(f"Client connected with ip {self.addr}")
         self.factory.clients.append(self)
 
     def connectionLost(self,reason):
-        print(f"Connection lost due to {reason} with ip {self.addr}")
+        logger.info(f"Connection lost due to {reason} with ip {self.addr}")
 
     def dataReceived(self,data):
-        print(f"Data received: {data} from ip {self.addr}")
+        logger.info(f"Data received: {data} from ip {self.addr}")
         if self.addr.host == '127.0.0.1':
+            logger.info("Data from localhost, sending data to client")
             self.factory.sendData(data)
         else:
-            pass
-            #requests.post('http://127.0.0.1/hardwareRequest/',data={'cmd':data})
+            logger.info(f"Data from client, sending to server with {data}")
+            requests.post('http://127.0.0.1/hardwareRequest/',data={'cmd':data})
 
     def sendData(self,data):
+        logger.debug(f"Sending data {data}")
         self.transport.write(data)
 
 
@@ -35,17 +40,22 @@ class ServerFactory(Factory):
         self.clients = []
 
     def buildProtocol(self,addr):
-        print("Building protocol ...")
+        logger.info(f"Building protocol with {addr} ")
         return Server(self,addr)
 
-    def sendData(self,data):
+    def sendData(self,data,ip = ""):
         for i in self.clients:
-            if i.addr.host != '127.0.0.1':
+            if i.addr.host != '127.0.0.1' and (ip != "" or i.addr.host == ip):
+                logger.info(f"Sending data {data} to {i}")
                 i.sendData(data)
 
 def sendDataToTCPServer(data):
+    logger.debug(f"Sending {data} to TCP server")
     sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    server_address = ('localhost',8500)
+    server_address = ('localhost',port)
+    logger.debug(f"Server address is {server_address} --> connecting")
     sock.connect(server_address)
+    logger.debug(f"Sending data")
     sock.sendall(str.encode(data))
+    logger.debug(f"Closing socket")
     sock.close()
