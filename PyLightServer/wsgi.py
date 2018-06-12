@@ -11,6 +11,37 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+
+from twisted.internet.endpoints import TCP4ServerEndpoint
+from twisted.internet import reactor
+from multiprocessing import Process
+import logging
+
+from PyLightServer.tcpserver import ServerFactory
+from PyLightSupport.Globals import *
+
+logger = logging.getLogger(__name__)
+
+runServer = False
+
+def startTCPServer():
+    logger.debug(f"Starting TCP4 Server on {port}")
+    endpoint = TCP4ServerEndpoint(reactor,port)
+    factory = ServerFactory()
+    endpoint.listen(factory)
+    logger.debug(f"Running reactor")
+    reactor.run()
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PyLightServer.settings")
+
+if not runServer:
+    p = Process(target=startTCPServer)
+    p.start()
+    runServer = True
+else:
+    logger.debug("Logger already running")
+
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PyLightServer.settings")
 
 application = get_wsgi_application()
