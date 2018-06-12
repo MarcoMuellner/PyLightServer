@@ -2,6 +2,27 @@
 import os
 import sys
 
+from twisted.internet.endpoints import TCP4ServerEndpoint
+from twisted.internet import reactor
+from multiprocessing import Process
+
+from PyLightServer.tcpserver import ServerFactory
+from PyLightSupport.loghandler import setup_logging
+
+setup_logging()
+
+def startTCPServer():
+    endpoint = TCP4ServerEndpoint(reactor,8500)
+    factory = ServerFactory()
+    endpoint.listen(factory)
+    reactor.run()
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PyLightServer.settings")
+
+p = Process(target=startTCPServer)
+p.start()
+
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PyLightServer.settings")
     try:
