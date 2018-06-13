@@ -10,7 +10,8 @@ from multiprocessing import Process
 import logging
 
 from PyLightServer.tcpserver import ServerFactory
-from PyLightSupport.Globals import *
+from PyLightCommon.Globals import *
+from PyLightCommon.loghandler import setup_logging
 import sys
 
 urlpatterns = [
@@ -23,6 +24,8 @@ urlpatterns = [
     path(r'base_layout',showTools.views.base_layout,name='base_layout'),
     path(r'config_layout',manageTools.views.config_layout,name='config_layout'),
 ]
+
+setup_logging()
 
 logger = logging.getLogger(__name__)
 

@@ -6,8 +6,8 @@ from django.db import IntegrityError
 
 import logging
 
-from PyLightSupport.pylightcommon.models import ConnectedSystem,UsedIO,IO,IOType
-from PyLightSupport.Commandos import *
+from PyLightCommon.pylightcommon.models import ConnectedSystem,UsedIO,IO,IOType
+from PyLightCommon.Commandos import *
 from PyLightServer.tcpserver import sendDataToTCPServer
 
 logger = logging.getLogger(__name__)

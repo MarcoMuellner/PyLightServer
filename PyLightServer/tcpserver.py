@@ -5,8 +5,8 @@ import socket
 import logging
 from requests.exceptions import ConnectionError
 
-from PyLightSupport.Globals import *
-from PyLightSupport.Commandos import *
+from PyLightCommon.Globals import *
+from PyLightCommon.Commandos import *
 
 logger = logging.getLogger(__name__)
 
