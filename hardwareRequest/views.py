@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import sys
 import logging
 
-from manageTools.models import ConnectedSystem,UsedIO,IO,IOType
+from PyLightSupport.pylightcommon.models import ConnectedSystem,UsedIO,IO,IOType
 from PyLightSupport.Commandos import *
 from PyLightServer.tcpserver import sendDataToTCPServer
 

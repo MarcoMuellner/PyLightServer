@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'manageTools.apps.ManagetoolsConfig',
     'showTools.apps.ShowtoolsConfig',
     'hardwareRequest.apps.HardwarerequestConfig',
+    'PyLightSupport.pylightcommon.apps.PylightcommonConfig',
     'pwa',
 
 ]

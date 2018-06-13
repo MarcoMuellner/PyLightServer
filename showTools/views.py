@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 
 import logging
 
-from manageTools.models import ConnectedSystem, UsedIO
+from PyLightSupport.pylightcommon.models import ConnectedSystem,UsedIO
 from PyLightSupport.Commandos import *
 from PyLightServer.tcpserver import sendDataToTCPServer
 
