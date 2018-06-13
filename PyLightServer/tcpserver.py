@@ -3,6 +3,7 @@ from twisted.internet.protocol import Factory
 import requests
 import socket
 import logging
+from requests.exceptions import ConnectionError
 
 from PyLightSupport.Globals import *
 
@@ -28,11 +29,16 @@ class Server(Protocol):
             self.factory.sendData(cmds[1],cmds[0])
         else:
             logger.info(f"Data from client, sending to server with {data}")
-            requests.post('http://127.0.0.1/hardwareRequest/',data={'cmd':data})
+            try:
+                #Verify=False is necesary because we have a self signed certificate
+                requests.post('https://127.0.0.1/hardwareRequest/',data={'cmd':data},verify=False)
+            except ConnectionError:
+                logger.info("Running on testserver --> using port 8000")
+                requests.post('http://127.0.0.1:8000/hardwareRequest/', data={'cmd': data})
 
-    def sendData(self,data):
+    def sendData(self,data:str):
         logger.debug(f"Sending data {data}")
-        self.transport.write(data)
+        self.transport.write(str.encode(data))
 
 
 class ServerFactory(Factory):
@@ -43,7 +49,7 @@ class ServerFactory(Factory):
         logger.info(f"Building protocol with {addr} ")
         return Server(self,addr)
 
-    def sendData(self,data,ip = ""):
+    def sendData(self,data:str,ip = ""):
         for i in self.clients:
             if i.addr.host != '127.0.0.1' and (ip != "" or i.addr.host == ip):
                 logger.info(f"Sending data {data} to {i}")

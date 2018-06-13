@@ -19,8 +19,6 @@ def handleRequests(request):
     logger.debug(f"Incoming command: {cmd}")
     data = cmd.split('||')
 
-    returnWord = ""
-
     if data[0] == cmd_signup[0]:
         logger.info(f"Processing {cmd_signup[0]} with serial number {data[3]}")
         if len(ConnectedSystem.objects.filter(serialNumber=data[3])) == 0:
@@ -35,8 +33,12 @@ def handleRequests(request):
             usedIO.save()
 
         system = ConnectedSystem.objects.get(serialNumber=data[3])
-        returnWord = cmd_welcome[0]+f"||{system.name}"
+        cmdword = f"{system.lastIP}##{cmd_welcome[0]}||{system.name}"
+    else:
+        logger.error(f"Command {data[0]} not known by server, returning")
+        return HttpResponse()
 
-    logger.info(f"Sending returnWord {returnWord}")
-    sendDataToTCPServer(returnWord)
+
+    logger.info(f"Sending returnWord {cmdword}")
+    sendDataToTCPServer(cmdword)
     return HttpResponse()
