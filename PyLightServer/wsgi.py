@@ -20,9 +20,13 @@ import logging
 from PyLightServer.tcpserver import ServerFactory
 from PyLightSupport.Globals import *
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PyLightServer.settings")
+
 logger = logging.getLogger(__name__)
 
 runServer = False
+
+
 
 def startTCPServer():
     logger.debug(f"Starting TCP4 Server on {port}")
@@ -32,8 +36,6 @@ def startTCPServer():
     logger.debug(f"Running reactor")
     reactor.run()
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PyLightServer.settings")
-
 if not runServer:
     p = Process(target=startTCPServer)
     p.start()
@@ -42,6 +44,6 @@ else:
     logger.debug("Logger already running")
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PyLightServer.settings")
+
 
 application = get_wsgi_application()

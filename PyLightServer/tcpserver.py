@@ -1,12 +1,10 @@
 from twisted.internet.protocol import Protocol
 from twisted.internet.protocol import Factory
 import requests
-import sys
 import socket
 import logging
 
 from PyLightSupport.Globals import *
-from manageTools.models import ConnectedSystem
 
 logger = logging.getLogger(__name__)
 
