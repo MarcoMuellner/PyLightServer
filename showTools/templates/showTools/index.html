@@ -17,7 +17,8 @@
                 <strong id="IO_Name:{{ usedio.id }}">{{ usedio.name }} </strong>
             <div class="onoffswitch">
                 <input type="checkbox" name="io_switch" id="io_active:{{ usedio.id }}" class="onoffswitch-checkbox"
-                         onchange="this.form.submit()" {% if usedio.active is True %} checked {% endif %}>
+                         onchange="this.form.submit()" {% if usedio.active is True %} checked {% endif %}
+                {% if usedio.connectedSystem.connected is False %} disabled{% endif %}>
                 <label class="onoffswitch-label" for="io_active:{{ usedio.id }}">
                     <span class="onoffswitch-inner"></span>
                     <span class="onoffswitch-switch"></span>

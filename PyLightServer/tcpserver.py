@@ -6,6 +6,7 @@ import logging
 from requests.exceptions import ConnectionError
 
 from PyLightSupport.Globals import *
+from PyLightSupport.Commandos import *
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,11 @@ class Server(Protocol):
         self.factory.clients.append(self)
 
     def connectionLost(self,reason):
-        logger.info(f"Connection lost due to {reason} with ip {self.addr}")
+        if self.addr != '127.0.0.1':
+            logger.info(f"Connection lost due to {reason} with ip {self.addr}")
+            data = f"{cmd_client_disconnected[0]}||{self.addr.host}"
+            sendPostData(data)
+
 
     def dataReceived(self,data:bytes):
         logger.info(f"Data received: {data} from ip {self.addr}")
@@ -29,12 +34,8 @@ class Server(Protocol):
             self.factory.sendData(cmds[1],cmds[0])
         else:
             logger.info(f"Data from client, sending to server with {data}")
-            try:
-                #Verify=False is necesary because we have a self signed certificate
-                requests.post('https://127.0.0.1/hardwareRequest/',data={'cmd':data},verify=False)
-            except ConnectionError:
-                logger.info("Running on testserver --> using port 8000")
-                requests.post('http://127.0.0.1:8000/hardwareRequest/', data={'cmd': data})
+            sendPostData(data)
+
 
     def sendData(self,data:str):
         logger.debug(f"Sending data {data}")
@@ -54,6 +55,15 @@ class ServerFactory(Factory):
             if i.addr.host != '127.0.0.1' and (ip != "" or i.addr.host == ip):
                 logger.info(f"Sending data {data} to {i}")
                 i.sendData(data)
+
+def sendPostData(data):
+    logger.debug(f"Sending request to django with {data}")
+    try:
+        #Verify=False is necesary because we have a self signed certificate
+        requests.post('https://127.0.0.1/hardwareRequest/',data={'cmd':data},verify=False)
+    except ConnectionError:
+        logger.info("Running on testserver --> using port 8000")
+        requests.post('http://127.0.0.1:8000/hardwareRequest/', data={'cmd': data})
 
 def sendDataToTCPServer(data):
     logger.debug(f"Sending {data} to TCP server")
