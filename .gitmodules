@@ -1,0 +1,3 @@
+[submodule "PyLightCommon"]
+	path = PyLightCommon
+	url = https://github.com/muma7490/PyLightCommon
