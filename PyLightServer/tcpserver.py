@@ -6,6 +6,7 @@ import socket
 import logging
 
 from PyLightSupport.Globals import *
+from manageTools.models import ConnectedSystem
 
 logger = logging.getLogger(__name__)
 
@@ -21,11 +22,13 @@ class Server(Protocol):
     def connectionLost(self,reason):
         logger.info(f"Connection lost due to {reason} with ip {self.addr}")
 
-    def dataReceived(self,data):
+    def dataReceived(self,data:bytes):
         logger.info(f"Data received: {data} from ip {self.addr}")
         if self.addr.host == '127.0.0.1':
             logger.info("Data from localhost, sending data to client")
-            self.factory.sendData(data)
+            cmds = str.split(data.decode(),"##")
+            ip = ConnectedSystem.objects.get(pk=int(cmds[0])).lastIP
+            self.factory.sendData(cmds[1],ip)
         else:
             logger.info(f"Data from client, sending to server with {data}")
             requests.post('http://127.0.0.1/hardwareRequest/',data={'cmd':data})

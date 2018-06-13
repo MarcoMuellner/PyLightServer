@@ -56,9 +56,8 @@ def saveIO(request, usedio_id):
         usedIo.pin = oldPin
         usedIo.save()
 
-    cmdword = cmd_add_output[0]+f"||{usedIo.name}||{io.ioNr}"
+    cmdword = f"{usedIo.connectedSystem_id}##{cmd_add_output[0]}||{usedIo.name}||{io.ioNr}"
     logger.debug(f"Sending data to TCPServer: {cmdword}")
-    # TODO add here identifier to Data
     sendDataToTCPServer(cmdword)
     return HttpResponseRedirect(reverse('index'))
 
