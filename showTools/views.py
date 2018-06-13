@@ -30,17 +30,17 @@ def base_layout(request):
 def saveState(request, usedio_id):
     logger.debug(f"Changing state of io {usedio_id}")
     usedIo = get_object_or_404(UsedIO, pk=usedio_id)
-    cmdWord = f"{usedIo.connectedSystem_id}##{0}||{usedIo.name}"
     if 'io_switch' in request.POST:
         logger.info(f"Setting {usedIo} to True")
         usedIo.active = True
-        cmdWord.format(cmd_set_output[0])
+        cmd =cmd_set_output[0]
     else:
         logger.info(f"Setting {usedIo} to False")
         usedIo.active = False
-        cmdWord.format(cmd_reset_outptut[0])
+        cmd = cmd_reset_outptut[0]
 
+    richCmd = f"{usedIo.connectedSystem.lastIP}##{cmd}||{usedIo.name}"
     usedIo.save()
-    logger.debug(f"Sending data to TCPServer: {cmdWord}")
-    sendDataToTCPServer(cmdWord)
+    logger.debug(f"Sending data to TCPServer: {richCmd}")
+    sendDataToTCPServer(richCmd)
     return HttpResponseRedirect(reverse('home'))

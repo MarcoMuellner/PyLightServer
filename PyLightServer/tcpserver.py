@@ -27,8 +27,7 @@ class Server(Protocol):
         if self.addr.host == '127.0.0.1':
             logger.info("Data from localhost, sending data to client")
             cmds = str.split(data.decode(),"##")
-            ip = ConnectedSystem.objects.get(pk=int(cmds[0])).lastIP
-            self.factory.sendData(cmds[1],ip)
+            self.factory.sendData(cmds[1],cmds[0])
         else:
             logger.info(f"Data from client, sending to server with {data}")
             requests.post('http://127.0.0.1/hardwareRequest/',data={'cmd':data})
