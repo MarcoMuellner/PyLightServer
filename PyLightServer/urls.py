@@ -8,11 +8,15 @@ from twisted.internet.endpoints import TCP4ServerEndpoint
 from twisted.internet import reactor
 from multiprocessing import Process
 import logging
+import sys
+import os
+from django.core.exceptions import ObjectDoesNotExist
 
 from PyLightServer.tcpserver import ServerFactory
 from PyLightCommon.Globals import *
 from PyLightCommon.loghandler import setup_logging
-import sys
+from PyLightCommon.updater import updater,RunnerType
+from PyLightCommon.pylightcommon.models import ClientSettings
 
 urlpatterns = [
     path('', include('pwa.urls')),
@@ -30,7 +34,6 @@ setup_logging()
 logger = logging.getLogger(__name__)
 
 def startTCPServer():
-    print("DEPP",file=sys.stderr)
     logger.debug(f"Starting TCP4 Server on {port}")
     endpoint = TCP4ServerEndpoint(reactor,port)
     factory = ServerFactory()
@@ -39,7 +42,35 @@ def startTCPServer():
     reactor.run()
 
 
-#Running in top level urls --> only called once
-p = Process(target=startTCPServer)
-p.start()
+try:
+    os.environ['MIGRATIIONS_APPLY']
+    migrationsApply = True
+except KeyError:
+    migrationsApply=False
+
+if not migrationsApply:
+    #Running in top level urls --> only called onc
+    p = Process(target=startTCPServer)
+    p.start()
+    print(f"{os.path.dirname(__file__)}/version")
+    with open(f"{os.path.dirname(__file__)}/version",'r') as f:
+        version = f.read()
+
+try:
+    os.environ['DEV_ENVIRONMENT']
+    devEnv = True
+except KeyError:
+    devEnv=False
+
+if not devEnv:
+    try:
+        settings = ClientSettings.objects.get(pk=1)
+        settings.version = version
+    except ObjectDoesNotExist:
+        settings = ClientSettings(serverAddress="127.0.0.1",name="server",version=version)
+    settings.save()
+
+    p = Process(target=updater,args=(RunnerType.Server,version,))
+    p.start()
+
 

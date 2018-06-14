@@ -2,3 +2,4 @@ django
 twisted
 requests
 django-progressive-web-app
+pytest

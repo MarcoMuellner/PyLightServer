@@ -200,3 +200,7 @@ linux-venv/
 windows-venv/
 
 windows_venv/
+
+updateScript_log_err\.txt
+
+updateScript_log_std\.txt
