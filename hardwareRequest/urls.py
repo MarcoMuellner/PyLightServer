@@ -1,7 +1,7 @@
 from django.urls import path
 
-from . import views
+from hardwareRequest.views import HardwareRequest
 
 urlpatterns = [
-    path('', views.handleRequests, name='postHardware'),
+    path('', HardwareRequest.as_view(), name='postHardware'),
 ]

@@ -5,10 +5,10 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 import logging
+import requests
 
 from PyLightCommon.pylightcommon.models import ConnectedSystem,UsedIO
 from PyLightCommon.Commandos import *
-from PyLightServer.tcpserver import sendDataToTCPServer
 
 logger = logging.getLogger(__name__)
 
@@ -39,8 +39,8 @@ def saveState(request, usedio_id):
         usedIo.active = False
         cmd = cmd_reset_outptut[0]
 
-    richCmd = f"{usedIo.connectedSystem.lastIP}##{cmd}||{usedIo.name}"
+    richCmd = f"{cmd}||{usedIo.name}"
     usedIo.save()
     logger.debug(f"Sending data to TCPServer: {richCmd}")
-    sendDataToTCPServer(richCmd)
+    requests.post(f"http://{usedIo.connectedSystem.lastIP}:8080/serverCommunication/", data={"cmd": richCmd})
     return HttpResponseRedirect(reverse('home'))

@@ -3,12 +3,12 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.db import IntegrityError
+import requests
 
 import logging
 
 from PyLightCommon.pylightcommon.models import ConnectedSystem,UsedIO,IO,IOType
 from PyLightCommon.Commandos import *
-from PyLightServer.tcpserver import sendDataToTCPServer
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +27,10 @@ def saveSystem(request, connectedSystem_id):
                 f"{request.POST['system_name']}")
     connectedSystem.name = request.POST['system_name']
     connectedSystem.save()
+
+    requests.post(f"http://{connectedSystem.lastIP}:8080/serverCommunication/",data={"cmd":f"{cmd_change_name[0]}"
+                                                                                      f"||{connectedSystem.name}"})
+
     return HttpResponseRedirect(reverse('index'))
 
 def saveIO(request, usedio_id):
@@ -56,9 +60,10 @@ def saveIO(request, usedio_id):
         usedIo.pin = oldPin
         usedIo.save()
 
-    cmdword = f"{usedIo.connectedSystem.lastIP}##{cmd_add_output[0]}||{usedIo.name}||{io.ioNr}"
+    cmdword = f"{cmd_add_output[0]}||{usedIo.name}||{io.ioNr}"
     logger.debug(f"Sending data to TCPServer: {cmdword}")
-    sendDataToTCPServer(cmdword)
+
+    requests.post(f"http://{usedIo.connectedSystem.lastIP}:8080/serverCommunication/",data={"cmd":cmdword})
     return HttpResponseRedirect(reverse('index'))
 
 def config_layout(request):

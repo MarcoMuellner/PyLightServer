@@ -3,3 +3,5 @@ twisted
 requests
 django-progressive-web-app
 pytest
+huey
+redis
