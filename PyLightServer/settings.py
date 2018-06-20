@@ -65,8 +65,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'manageTools.apps.ManagetoolsConfig',
     'showTools.apps.ShowtoolsConfig',
-    'hardwareRequest.apps.HardwarerequestConfig',
     'PyLightCommon.pylightcommon.apps.PylightcommonConfig',
+    'PyLightCommon.cmdHandler.apps.CmdhandlerConfig',
     'pwa',
 
 ]
@@ -159,3 +159,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = (
     os.path.join(BASE_DIR, 'media')
 )
+
+CMDPATH = os.path.join(BASE_DIR,"cmdFiles")
