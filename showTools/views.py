@@ -1,14 +1,12 @@
 from django.shortcuts import render
 from django.views import generic
-from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 import logging
-import requests
 
 from PyLightCommon.pylightcommon.models import ConnectedSystem,UsedIO
-from PyLightCommon.Commandos import *
+from PyLightCommon.cmdHandler.cmdHandler import sendCommand
 
 logger = logging.getLogger(__name__)
 
@@ -29,18 +27,19 @@ def base_layout(request):
 
 def saveState(request, usedio_id):
     logger.debug(f"Changing state of io {usedio_id}")
-    usedIo = get_object_or_404(UsedIO, pk=usedio_id)
+    usedIo = UsedIO.objects.get(pk=usedio_id)
     if 'io_switch' in request.POST:
+        sendCommand(usedIo.connectedSystem.lastIP,
+                    commando="changeOut",
+                    usedIO_id=usedio_id,
+                    active=True)
         logger.info(f"Setting {usedIo} to True")
-        usedIo.active = True
-        cmd =cmd_set_output[0]
     else:
-        logger.info(f"Setting {usedIo} to False")
-        usedIo.active = False
-        cmd = cmd_reset_outptut[0]
 
-    richCmd = f"{cmd}||{usedIo.name}"
-    usedIo.save()
-    logger.debug(f"Sending data to TCPServer: {richCmd}")
-    requests.post(f"http://{usedIo.connectedSystem.lastIP}:8080/serverCommunication/", data={"cmd": richCmd})
+        sendCommand(usedIo.connectedSystem.lastIP,
+                    commando="changeOut",
+                    usedIO_id=usedio_id,
+                    active=False)
+        logger.info(f"Setting {usedIo} to False")
+
     return HttpResponseRedirect(reverse('home'))

@@ -1,0 +1,73 @@
+[
+  {
+    "commando": "changeOut",
+    "response": "Ok",
+    "type": "out",
+    "method": "post",
+    "parameters": [
+      "usedIO_id",
+      "active"
+    ],
+    "model": {
+      "name": "pylightcommon.UsedIO",
+      "id": {
+        "usedIO_id": "pk"
+      },
+      "setValue":{
+        "active": "active"
+      },
+      "fields": {
+        "3": "name"
+      }
+    }
+  },
+  {
+    "commando": "addOut",
+    "response": "Ok",
+    "type": "out",
+    "method": "post",
+    "parameters": [
+      "name",
+      "io",
+      "type"
+      ],
+    "model": {
+      "name": "pylightcommon.UsedIO",
+      "id": {
+        "name": "name"
+      },
+      "setValue":{
+        "name":"name",
+        "pin": "pin",
+        "type": "type"
+      },
+      "fields": {
+        "3": "name",
+        "4": "io.ioNr"
+      }
+    }
+  },
+  {
+    "commando": "nameChange",
+    "response": "Ok",
+    "type": "out",
+    "method": "post",
+    "parameters": [
+      "id",
+      "name"
+      ],
+    "model": {
+      "name": "pylightcommon.ConnectedSystem",
+      "id": {
+        "id": "pk"
+      },
+      "setValue":{
+        "name":"name"
+      },
+      "fields": {
+        "3": "name",
+      }
+    }
+  }
+
+]

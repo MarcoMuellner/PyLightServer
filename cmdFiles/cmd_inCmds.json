@@ -1,26 +1,28 @@
 [
   {
-    "commando":"Alive",
-    "response":"Ok",
-    "type":"in"
+    "commando": "Alive",
+    "response": "Ok",
+    "type": "in"
   },
   {
-    "commando":"Signup",
-    "response":"Ok",
-    "type":"in",
-    "model":"pylightcommon.ConnectedSystem",
-    "id":{
-      "1":"serialNumber"
+    "commando": "Signup",
+    "response": "Ok",
+    "type": "in",
+    "model": {
+      "name": "pylightcommon.ConnectedSystem",
+      "id": {
+        "1": "serialNumber"
+      },
+      "fields": {
+        "2": "lastIP",
+        "3": "lastMacAddress",
+        "1": "serialNumber",
+        "4": "connected",
+        "5": "active"
+      }
     },
-    "fields":{
-      "2":"lastIP",
-      "3":"lastMacAddress",
-      "1":"serialNumber",
-      "4":"connected",
-      "5":"active"
-    },
-    "hooked_function":{
-      "1":"addUsedIO"
+    "hooked_function": {
+      "1": "addUsedIO"
     }
   }
 ]
