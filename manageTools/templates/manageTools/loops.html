@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block systemForm %}
-    <form action="{% url 'saveSystem' connectedSystem.id %}" method="post">
+    <form action="{% url 'manageTools:saveSystem' connectedSystem.id %}" method="post">
         {%  csrf_token %}
             <strong><label for="{{ connectedSystem.id }}">Systemname:</label></strong>
             <input type="text" name="system_name" id={{ connectedSystem.id }} value="{{ connectedSystem.name }}">
@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block ioForm %}
-    <form action="{% url 'saveIO' usedio.id %}" method="post">
+    <form action="{% url 'manageTools:saveIO' usedio.id %}" method="post">
         {%  csrf_token %}
 
         {% block ioName %}

@@ -29,7 +29,7 @@ def saveSystem(request, connectedSystem_id):
     logger.info(f"Setting system name with id {connectedSystem_id} from {connectedSystem.name} to"
                 f"{request.POST['system_name']}")
 
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('manageTools:index'))
 
 def saveIO(request, usedio_id):
     logger.debug("Adding new io")
@@ -45,7 +45,7 @@ def saveIO(request, usedio_id):
                 name=request.POST['io_name'],
                 pin=io,
                 type=ioType)
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('manageTools:index'))
 
 def config_layout(request):
     template = 'manageTools/index.html'

@@ -42,4 +42,4 @@ def saveState(request, usedio_id):
                     active=False)
         logger.info(f"Setting {usedIo} to False")
 
-    return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(reverse('showTools:base_layout'))

@@ -1,5 +1,11 @@
 [
   {
+    "commando": "Alive",
+    "response": "Ok",
+    "type": "out",
+    "method":"get"
+  },
+  {
     "commando": "changeOut",
     "response": "Ok",
     "type": "out",
@@ -65,7 +71,7 @@
         "name":"name"
       },
       "fields": {
-        "3": "name",
+        "3": "name"
       }
     }
   }
